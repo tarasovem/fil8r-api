@@ -37,7 +37,7 @@ MongoClient.connect(myurl, (err, client) => {
 
 /* Маршруты */
 
-app.get('/', fileRouter);
+app.use('/', fileRouter);
 
 app.post('/uploadfile', upload.single('uploadedFile'), (req, res, next) => {
   const file = req.file;

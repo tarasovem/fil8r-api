@@ -6,4 +6,8 @@ const ctrlFiles = require('../controllers/files');
 
 router.get('/', ctrlFiles.index);
 
+/* POST отправить файл из формы */
+
+router.post('/uploadfile', ctrlFiles.uploadFormFile, ctrlFiles.fileCreate);
+
 module.exports = router;
