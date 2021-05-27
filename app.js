@@ -3,6 +3,7 @@ const bodyParser  = require('body-parser');
 const multer = require('multer');
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
+const fileRouter = require('./routes/index');
 
 /* Инициализируем БД */
 
@@ -36,9 +37,7 @@ MongoClient.connect(myurl, (err, client) => {
 
 /* Маршруты */
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-});
+app.get('/', fileRouter);
 
 app.post('/uploadfile', upload.single('uploadedFile'), (req, res, next) => {
   const file = req.file;
