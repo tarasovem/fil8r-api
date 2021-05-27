@@ -1,12 +1,12 @@
-const express = require('express');
 const multer = require('multer');
 const rootDir = require('path').resolve('./');
 
-
+/* Отдаем домашняя страницу */
 const index = (req, res) => {
   res.sendFile(rootDir + '/index.html');
 }
 
+/* Создаем хранилище */
 const storage = multer.diskStorage({
   destination: (req, res, cd) => {
     cd(null, 'uploads')
@@ -16,10 +16,13 @@ const storage = multer.diskStorage({
   }
 });
 
+/* Указываем Multer на хранилище  */
 const upload = multer({storage: storage});
 
+/* Загружаем один файл из формы */
 const uploadFormFile = upload.single('uploadedFile');
 
+/* Отвечаем клиенту какой файл получен */
 const fileCreate = (req, res, next) => {
   const file = req.file;
 
