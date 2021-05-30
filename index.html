@@ -9,5 +9,11 @@
   <input type="file" name="uploadedFile">
   <input type="submit" value="Загрузить файл">
 </form>
+
+<script>
+  fetch('https://jsonplaceholder.typicode.com/todos/1')
+    .then(response => response.json())
+    .then(json => console.log(json))
+</script>
 </body>
 </html>

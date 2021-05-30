@@ -1,29 +1,6 @@
-const multer = require('multer');
-const rootDir = require('path').resolve('./');
+// Создать запись о файле и сохранить в файловом хранилище
+const fileCreate = (req, res) => {
 
-/* Отдаем домашняя страницу */
-const index = (req, res) => {
-  res.sendFile(rootDir + '/index.html');
-}
-
-/* Создаем хранилище */
-const storage = multer.diskStorage({
-  destination: (req, res, cd) => {
-    cd(null, 'uploads')
-  },
-  filename: (req, file, cd) => {
-    cd(null, file.fieldname + '-' + Date.now())
-  }
-});
-
-/* Указываем Multer на хранилище  */
-const upload = multer({storage: storage});
-
-/* Загружаем один файл из формы */
-const uploadFormFile = upload.single('uploadedFile');
-
-/* Отвечаем клиенту какой файл получен */
-const fileCreate = (req, res, next) => {
   const file = req.file;
 
   if(!file) {
@@ -33,10 +10,8 @@ const fileCreate = (req, res, next) => {
   }
 
   res.send(file);
-}
+};
 
 module.exports = {
-  index,
-  uploadFormFile,
   fileCreate
 };

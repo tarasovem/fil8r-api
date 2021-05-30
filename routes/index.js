@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const ctrlFiles = require('../controllers/files');
+const multer = require('multer');
+const upload = multer({dest: '../uploads'});
 
-/* GET домашнюю страницу */
-router.get('/', ctrlFiles.index);
+router.post('/file', upload.single('foo'), ctrlFiles.fileCreate);
 
-/* POST отправить файл из формы */
-router.post('/uploadfile', ctrlFiles.uploadFormFile, ctrlFiles.fileCreate);
 
 module.exports = router;
