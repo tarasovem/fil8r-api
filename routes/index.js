@@ -4,7 +4,7 @@ const ctrlFiles = require('../controllers/files');
 const multer = require('multer');
 const upload = multer({dest: 'uploads'});
 
-router.post('/file', upload.single('foo'), ctrlFiles.fileCreate);
+router.post('/file', upload.single('foo'), ctrlFiles.createFile);
 
 
 module.exports = router;

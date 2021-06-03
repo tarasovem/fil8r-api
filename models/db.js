@@ -1,24 +1,18 @@
 const { MongoClient } = require('mongodb');
+const uri = process.env.DB_URI;
+let _db;
 
-const dbUri = 'mongodb://127.0.0.1:27017/fil8r';
-
-const client = new MongoClient(dbUri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-async function run() {
-  try {
-    await client.connect();
-
-    const database = client.db('fil8r');
-    global.fileCollection = database.collection('files');
-
-    await client.db("admin").command({ ping: 1 });
-    console.log("Connected successfully to server");
-  } finally {
-    await client.close();
+module.exports = {
+  connectToServer: function (callback) {
+    MongoClient.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    }, function (err, client) {
+      _db = client.db('fil8r');
+      return callback(err);
+    });
+  },
+  getDB: function () {
+    return _db;
   }
 }
-
-run().catch(console.dir);

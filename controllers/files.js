@@ -1,5 +1,8 @@
+const mongodb = require('../models/db');
+const db = mongodb.getDB();
+
 // Создать запись о файле и сохранить в файловом хранилище
-const fileCreate = (req, res) => {
+const createFile = (req, res) => {
 
   const file = req.file;
 
@@ -9,9 +12,17 @@ const fileCreate = (req, res) => {
     return next(error);
   }
 
-  res.send(file);
+  const newFile = {
+    name: file.originalname,
+    size: file.size,
+    creationDate: new Date
+  }
+
+  db.collection('files').insertOne(newFile);
+
+  res.send(newFile);
 };
 
 module.exports = {
-  fileCreate
+  createFile
 };
