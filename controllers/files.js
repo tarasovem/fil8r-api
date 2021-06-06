@@ -1,9 +1,8 @@
 const mongodb = require('../models/db');
 const db = mongodb.getDB();
 
-// Создать запись о файле и сохранить в файловом хранилище
+// Создать новую запись о файле
 const createFile = (req, res) => {
-
   const file = req.file;
 
   if(!file) {
@@ -23,6 +22,17 @@ const createFile = (req, res) => {
   res.send(newFile);
 };
 
+// Получить записи о файле
+const getFilesList = async (req, res) => {
+
+  const files = db.collection('files');
+  const searchCursor = await files.find({isDeleted: {$ne: true}});
+  const result = await searchCursor.toArray();
+
+  res.send(result);
+};
+
 module.exports = {
-  createFile
+  createFile,
+  getFilesList
 };
