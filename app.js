@@ -5,6 +5,12 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 const mongodb = require('./models/db');
 
+app.use('/api', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  next();
+});
+
 mongodb.connectToServer(function ( err ) {
   const apiRouter = require('./routes/index');
 
@@ -21,8 +27,6 @@ mongodb.connectToServer(function ( err ) {
     res.render('error');
   });
 })
-
-/* Маршруты */
 
 /* Слушаем порт */
 app.listen(process.env.PORT, () => {
